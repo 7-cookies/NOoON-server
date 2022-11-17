@@ -3,7 +3,7 @@ const util = {
         return {
             status,
             success: true,
-            message:,
+            message,
             data,
         };
     },
