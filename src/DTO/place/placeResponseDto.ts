@@ -1,5 +1,5 @@
-export interface placeResponseDto {
+export interface PlaceResponseDto {
     name: string;
-    background: string;
-    invitationCode: string;
+    background: number;
+    invitationCode?: string;
 }
