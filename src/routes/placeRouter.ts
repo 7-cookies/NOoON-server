@@ -12,5 +12,7 @@ body('background').isInt()],
 // auth,
 placeController.createPlace);
 
+router.get('/:invitationCode/',
+placeController.getPlace);
 
 export default router;
