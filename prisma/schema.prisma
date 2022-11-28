@@ -8,27 +8,27 @@ datasource db {
 }
 
 model place {
-  id              Int      @id @default(autoincrement())
-  invitation_code String   @db.VarChar(6)
-  name            String   @db.VarChar(20)
-  background      Int      @default(1)
-  snowman_id      Int?
-  snowman         snowman? @relation(fields: [snowman_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "place_snowman_null_fk")
-  user            user[]
+  id                              Int       @id @default(autoincrement())
+  invitation_code                 String    @unique @db.VarChar(6)
+  name                            String    @db.VarChar(20)
+  background                      Int       @default(1)
+  snowman_placeTosnowman_place_id snowman[] @relation("placeTosnowman_place_id")
+  user                            user[]
 }
 
 model snowman {
-  id           Int       @id @default(autoincrement())
-  head         Int       @default(1)
-  accessary    Int       @default(1)
-  eye          Int       @default(1)
-  nose         Int       @default(1)
-  mouse        Int       @default(1)
-  arm          Int       @default(1)
-  letter       String?   @default("") @db.VarChar(100)
-  creator      String    @db.VarChar(20)
-  created_date DateTime? @db.Date
-  place        place[]
+  id                            Int       @id @default(autoincrement())
+  head                          Int       @default(1)
+  accessory                     Int       @default(1)
+  eye                           Int       @default(1)
+  nose                          Int       @default(1)
+  mouse                         Int       @default(1)
+  arm                           Int       @default(1)
+  letter                        String?   @default("") @db.VarChar(100)
+  creator                       String    @db.VarChar(20)
+  created_date                  DateTime? @default(now()) @db.Date
+  place_id                      Int
+  place_placeTosnowman_place_id place     @relation("placeTosnowman_place_id", fields: [place_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "snowman_place_null_fk")
 }
 
 model user {

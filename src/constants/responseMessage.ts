@@ -20,7 +20,14 @@ const message = {
     SIGN_IN_SUCCESS: "로그인 성공",
     SIGN_IN_FAIL: "로그아웃 실패",
     SIGN_UP_SUCCESS: "회원가입 성공",
-    SIGN_UP_FAIL: "회원가입 실패"
+    SIGN_UP_FAIL: "회원가입 실패",
+    USER_EXIST: "존재하는 회원입니다.",
+
+    // 눈사람
+    CREATE_SNOWMAN_SUCCESS: "눈사람 생성 성공",
+    CREATE_SNOWMAN_FAIL: "눈사람 생성 실패",
+    GET_SNOWMAN_SUCCESS: "눈사람 조회 성공",
+    GET_SNOWMAN_FAIL: "눈사람 조회 실패",
 
 }
 
