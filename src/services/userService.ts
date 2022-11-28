@@ -11,7 +11,7 @@ const signIn = async (userRequestDto:UserSignUpRequestDto) => {
         const user = await userDao.findUserByUsername(userRequestDto);
         if (!user) return null;
 
-        const isMatch = await bcrypt.compare(String(userRequestDto.password), user.password);
+        const isMatch = await bcrypt.compare(userRequestDto.password as string, user.password);
         if (!isMatch) return sc.UNAUTHORIZED;
 
         return user.id;
