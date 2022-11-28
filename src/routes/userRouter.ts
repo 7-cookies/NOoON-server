@@ -11,6 +11,7 @@ router.post('/signup',
 body('password').isInt().isLength({min:4, max:4})],
  userController.signUp);
 
-router.post('/signin', auth, userController.signIn);
+router.post('/signin', userController.signIn);
+
 
 export default router;
