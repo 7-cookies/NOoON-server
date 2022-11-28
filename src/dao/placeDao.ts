@@ -55,7 +55,12 @@ const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
                     arm: true,
                     creator: true
                 },
-            },    
+            },
+            _count: {
+                select:{
+                    snowman_placeTosnowman_place_id: true
+                },
+            },   
         },
     })
 

@@ -19,7 +19,7 @@ const auth = async (req:Request, res:Response, next:NextFunction) => {
         const decoded = jwtHandler.verify(token);
 
         if (decoded === tokenType.TOKEN_EXPIRED) {
-            // 토큰 만료시에 실행됨
+            // 토큰 만료시에 실행됨/
             return res.status(sc.UNAUTHORIZED).send(fail(sc.UNAUTHORIZED, m.TOKEN_EXPIRED));
         }
 
