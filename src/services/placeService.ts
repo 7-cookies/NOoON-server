@@ -1,7 +1,7 @@
 import { PrismaClientValidationError } from "@prisma/client/runtime";
 import { sc } from "../constants";
 import { placeDao } from '../dao';
-import { PlaceRequestDto, PlaceCreateRequestDto } from "../dto/place/placeRequestDto";
+import { PlaceRequestDto, PlaceCreateRequestDto, PlaceGetRequestDto } from "../dto/place/placeRequestDto";
 import { PlaceResponseDto } from "../dto/place/placeResponseDto";
 
 const createPlace = async(placeRequestDto: PlaceRequestDto) => {
@@ -33,6 +33,23 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
     }
 };
 
-const placeService = {createPlace};
+const getPlace = async(placeGetRequestDto : PlaceGetRequestDto) => {
+    try{
+        const placeGetResponseDto = await placeDao.getPlace(placeGetRequestDto);
+
+        if (!placeGetResponseDto){
+            return sc.BAD_REQUEST
+        }
+        else return placeGetResponseDto;
+    }
+    catch(error) {
+        console.log(error);
+        throw error
+    }
+}
+const placeService = {
+    createPlace, 
+    getPlace
+};
 
 export default placeService;
