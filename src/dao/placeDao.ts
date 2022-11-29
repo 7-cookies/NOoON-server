@@ -44,6 +44,9 @@ const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
             name: true,
             invitation_code: true,
             snowman_placeTosnowman_place_id: {
+                orderBy:{
+                    created_date: 'asc'
+                },
                 select : {
                     id: true,
                     head: true,
