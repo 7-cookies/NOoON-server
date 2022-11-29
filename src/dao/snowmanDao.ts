@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { CreateSnowmanRequestDto } from '../dto/snowman/snowmanRequestDto';
 import { CreateSnowmanResponseDto } from '../dto/snowman/snowmanResponseDto';
 
 const prisma = new PrismaClient();
