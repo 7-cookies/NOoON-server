@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { PrismaClientValidationError } from "@prisma/client/runtime";
 import { sc } from "../constants";
 import { placeDao } from '../dao';
@@ -36,3 +37,5 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
 const placeService = {createPlace};
 
 export default placeService;
+=======
+>>>>>>> develop

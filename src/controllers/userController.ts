@@ -9,6 +9,7 @@ import { UserSignInResponseDto, UserSignUpResponseDto } from "../dto/user/userRe
 
 
 // * 회원가입
+// * request data: username, password
 const signUp = async (req: Request, res: Response) => {
     const error = validationResult(req);
     if (!error.isEmpty()) {
@@ -17,12 +18,17 @@ const signUp = async (req: Request, res: Response) => {
 
     const userRequestDto:UserSignUpRequestDto = req.body;
 
+    console.log(userRequestDto);
+
     try {
         const userSignUpResponseDto = await userService.signUp(userRequestDto);
 
+        if (userSignUpResponseDto == null) {
+          return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, m.USER_EXIST));
+        }
         return res.status(sc.OK).send(success(sc.OK,m.OK, userSignUpResponseDto));
     } catch (error) {
-        if (error == 400) {
+        if (error == sc.BAD_REQUEST) {
             return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, m.BAD_REQUEST));
         }
         return res.status(sc.INTERNAL_SERVER_ERROR).send(fail(sc.INTERNAL_SERVER_ERROR, m.INTERNAL_SERVER_ERROR));
@@ -30,6 +36,7 @@ const signUp = async (req: Request, res: Response) => {
 };
 
 //* 로그인
+//* request data: username, password
 const signIn = async (req: Request, res: Response) => {
     const error = validationResult(req);
     if (!error.isEmpty()) {
@@ -46,9 +53,11 @@ const signIn = async (req: Request, res: Response) => {
       if (!userId) { return res.status(sc.NOT_FOUND).send(fail(sc.NOT_FOUND, m.NOT_FOUND)); }
       else if (userId === sc.UNAUTHORIZED)
         { return res.status(sc.UNAUTHORIZED).send(fail(sc.UNAUTHORIZED, m.INVALID_PASSWORD)); }
-  
+
+      // * Token 생성
       const accessToken = jwtHandler.sign(userId);
-  
+      
+      // * Response DTO
       const userSignInResponseDto: UserSignInResponseDto = {
         id: userId,
         accessToken: accessToken,
@@ -57,7 +66,6 @@ const signIn = async (req: Request, res: Response) => {
       res.status(sc.OK).send(success(sc.OK, m.SIGN_IN_SUCCESS, userSignInResponseDto));
     } catch (e) {
       console.log(error);
-      //? 서버 내부에서 오류 발생
       res.status(sc.INTERNAL_SERVER_ERROR).send(fail(sc.INTERNAL_SERVER_ERROR, m.INTERNAL_SERVER_ERROR));
     }
   };
