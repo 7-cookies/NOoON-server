@@ -36,7 +36,6 @@ const findPlaceByInvitationCode = async (invitationCode: string) => {
 const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
     const { invitationCode } = placeGetRequestDto;
 
-    console.log(invitationCode);
     const data = await prisma.place.findFirst({
         where: {
             invitation_code: invitationCode,
@@ -51,7 +50,7 @@ const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
                     accessory: true,
                     eye: true,
                     nose: true,
-                    mouse: true,
+                    mouth: true,
                     arm: true,
                     creator: true
                 },
@@ -64,7 +63,6 @@ const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
         },
     })
 
-    console.log(data);
     return data;
 }
 
