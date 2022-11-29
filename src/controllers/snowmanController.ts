@@ -1,4 +1,3 @@
-import { FindSnowmanRequestDto } from './../dto/snowman/snowmanRequestDto';
 import { fail, success } from './../constants/response';
 import { validationResult } from 'express-validator';
 import { Request, Response } from "express"
@@ -6,6 +5,7 @@ import { m, sc } from '../constants';
 import { snowmanService } from '../services';
 
 // * 눈사람 생성 
+// * request data: head, accessory, eye, nose, mouse, arm, letter, creator
 const createSnowman = async (req:Request, res:Response) => {
 
     const error =  validationResult(req);
