@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { PrismaClientValidationError } from "@prisma/client/runtime";
 import { sc } from "../constants";
 import { placeDao } from '../dao';
@@ -54,5 +53,4 @@ const placeService = {
 };
 
 export default placeService;
-=======
->>>>>>> develop
+
