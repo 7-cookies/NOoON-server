@@ -23,6 +23,12 @@ const message = {
     SIGN_UP_FAIL: "회원가입 실패",
     USER_EXIST: "존재하는 회원입니다.",
 
+    // 동산
+    CREATE_PLACE_SUCCESS: "동산 생성 성공",
+    CREATE_PLACE_FAIL: "동산 생성 실패",
+    GET_PLACE_SUCCESS: "동산 조회 성공",
+    GET_PLACE_FAIL: "동산 조회 실패",
+
     // 눈사람
     CREATE_SNOWMAN_SUCCESS: "눈사람 생성 성공",
     CREATE_SNOWMAN_FAIL: "눈사람 생성 실패",
