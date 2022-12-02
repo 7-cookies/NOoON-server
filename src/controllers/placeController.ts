@@ -16,7 +16,7 @@ const createPlace= async (req:Request, res:Response) => {
         const placeResponseDto = await placeService.createPlace(placeRequestDto);
         
         if(!placeResponseDto) { 
-            return res.status(sc.BAD_REQUEST).send(fail);
+            return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST,m.BAD_REQUEST));
         }
         return res.status(sc.OK).send(success(sc.OK, m.OK, placeResponseDto));
     } catch (error){
@@ -40,7 +40,7 @@ const getPlace = async (req:Request, res: Response) => {
         const placeResponseDto = await placeService.getPlace(placeGetRequestDto);
         
         if (!placeResponseDto) {
-            return res.status(sc.BAD_REQUEST).send(fail);
+            return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST,m.BAD_REQUEST));
         }
         return res.status(sc.OK).send(success(sc.OK, m.OK, placeResponseDto));
 
