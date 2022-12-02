@@ -22,7 +22,7 @@ model snowman {
   accessory                     Int       @default(1)
   eye                           Int       @default(1)
   nose                          Int       @default(1)
-  mouse                         Int       @default(1)
+  mouth                         Int       @default(1)
   arm                           Int       @default(1)
   letter                        String?   @default("") @db.VarChar(100)
   creator                       String    @db.VarChar(20)

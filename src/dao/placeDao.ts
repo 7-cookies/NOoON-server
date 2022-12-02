@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { PlaceCreateRequestDto } from '../dto/place/placeRequestDto';
+import { PlaceCreateRequestDto, PlaceGetRequestDto } from '../dto/place/placeRequestDto';
 import { PlaceResponseDto } from '../dto/place/placeResponseDto';
 
 const prisma = new PrismaClient();
@@ -33,22 +33,45 @@ const findPlaceByInvitationCode = async (invitationCode: string) => {
     return data;
 }
 
-// * 초대코드로 place id 조회
-const findPlaceIdByInvitationCode = async (invitationCode: string) => {
-    
+const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
+    const { invitationCode } = placeGetRequestDto;
+
     const data = await prisma.place.findFirst({
         where: {
-            invitation_code: invitationCode
-        }
+            invitation_code: invitationCode,
+        },
+        select: {
+            name: true,
+            invitation_code: true,
+            snowman_placeTosnowman_place_id: {
+                orderBy:{
+                    created_date: 'asc'
+                },
+                select : {
+                    id: true,
+                    head: true,
+                    accessory: true,
+                    eye: true,
+                    nose: true,
+                    mouth: true,
+                    arm: true,
+                    creator: true
+                },
+            },
+            _count: {
+                select:{
+                    snowman_placeTosnowman_place_id: true
+                },
+            },   
+        },
     })
 
-    return data?.id;
+    return data;
 }
 
-const placeDao = {
-    findPlaceIdByInvitationCode,
+    const placeDao = {
     findPlaceByInvitationCode,
-    createPlace
+    createPlace,
+    getPlace
 }
-
 export default placeDao;
