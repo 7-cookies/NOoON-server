@@ -7,14 +7,14 @@ const prisma = new PrismaClient();
 // request data: head, accessory, eye, nose, mouse, arm, letter, creator, place_id
 // response data: head, accessory, eye, nose, mouse, arm, letter, creator, created_date
 const createSnowman = async (createSnowmanRequestDto:any, placeId:number) => {
-    const { head, accessory, eye, nose, mouse, arm, letter, creator } = createSnowmanRequestDto;
+    const { head, accessory, eye, nose, mouth, arm, letter, creator } = createSnowmanRequestDto;
     const snowman = await prisma.snowman.create({
         data: {
             head: head,
             accessory: accessory,
             eye: eye,
             nose: nose,
-            mouse: mouse,
+            mouth: mouth,
             arm: arm,
             letter: letter,
             creator: creator,
@@ -30,7 +30,7 @@ const createSnowman = async (createSnowmanRequestDto:any, placeId:number) => {
         accessory: snowman.accessory,
         eye: snowman.eye,
         nose: snowman.nose,
-        mouse: snowman.mouse,
+        mouth: snowman.mouth,
         arm: snowman.arm,
         letter: snowman.letter,
         creator: snowman.creator,
