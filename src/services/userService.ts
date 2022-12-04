@@ -6,12 +6,16 @@ import { UserSignInResponseDto, UserSignUpResponseDto } from '../dto/user/userRe
 import { UserSignUpRequestDto, UserSignInRequestDto } from '../dto/user/userRequestDto';
 import jwtHandler from '../modules/jwtHandler';
 
+// * 로그인
 const signIn = async (userRequestDto:UserSignUpRequestDto) => {
     try {
         const user = await userDao.findUserByUsername(userRequestDto);
         if (!user) return null;
-
-        const isMatch = await bcrypt.compare(String(userRequestDto.password), user.password);
+        
+        const password:string = String(userRequestDto.password);
+        
+        // * 비밀번호 비교
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return sc.UNAUTHORIZED;
 
         return user.id;
@@ -22,17 +26,17 @@ const signIn = async (userRequestDto:UserSignUpRequestDto) => {
     }
 }
 
-
+// * 회원가입
 const signUp = async (userRequestDto:UserSignUpRequestDto) => {
     try {
-        
         const { username, password } = userRequestDto;
         const saltRound:number = Number(config.saltRounds);
         const salt:string = await bcrypt.genSalt(saltRound);
         const hashedPassword:string = await bcrypt.hash(String(password), salt);
 
         const data = await userDao.findUserIdByUsername(username);
-        if (data) return sc.BAD_REQUEST;
+
+        if (data) return null;
 
         const userSignUpRequestDto: UserSignUpRequestDto =  { 
             username: username,

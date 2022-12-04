@@ -8,8 +8,8 @@
 - 🦁 프로젝트 일시: 2022.10.30 ~ Ing
 
 ## ☃️ Our Service
-눈사람을 꾸며주고 메시지를 작성하여 마음을 공유하는 따뜻한 크리스마스 이야기
-
+  #### 서비스 소개
+-  눈사람을 꾸며주고 메시지를 작성하여 마음을 공유하는 따뜻한 크리스마스 이야기
 
 
 <br/> 
@@ -94,11 +94,10 @@ $ yarn run dev
 
 ## 👨‍👧‍👦 Team  
   
-  |                **☃️ [나영경](https://github.com/holmir97)**                 |                **☃️ [최윤한](https://github.com/unanchoi)**                 |
+  |                **☃️ [나영경](https://github.com/na-yk)**                 |                **☃️ [최윤한](https://github.com/unanchoi)**                 |
   |:-----------------------------------:|:-----------------------------------:|
 | [![FVCproductions](https://avatars.githubusercontent.com/u/102007066?v=4)]() | [![FVCproductions](https://avatars.githubusercontent.com/u/81692211?v=4)]() |
 |                                 서버 개발자                                 |                                 서버 개발자                                 |
 |        프로젝트 세팅<br />서버 배포<br />DB 설계<br />Place API 작성<br />        |        프로젝트 세팅<br />서버 배포<br />DB 설계<br />User, Snowman API 작성<br />        |
-
 
 <br/>
