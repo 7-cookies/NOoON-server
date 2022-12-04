@@ -34,6 +34,7 @@ const message = {
     CREATE_SNOWMAN_FAIL: "눈사람 생성 실패",
     GET_SNOWMAN_SUCCESS: "눈사람 조회 성공",
     GET_SNOWMAN_FAIL: "눈사람 조회 실패",
+    GET_SNOWMAN_TIME_LIMIT: "눈사람 조회가 아직 불가능",
 
 }
 
