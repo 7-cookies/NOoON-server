@@ -9,6 +9,6 @@ export interface PlaceCreateRequestDto {
     invitationCode: string;
 }
 
-export interface PlaceGetRequestDto {
+export interface PlaceGetRequestDto{
     invitationCode: string;
 }
