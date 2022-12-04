@@ -20,7 +20,7 @@ const createPlace = async (requestDto: PlaceCreateRequestDto) => {
     return responseDto;
 }
 
-const findPlaceByInvitationCode = async (invitationCode: string) => {
+const findPlaceIdByInvitationCode = async (invitationCode: string) => {
     const data = await prisma.place.findFirst({
         where: {
             invitation_code : invitationCode
@@ -29,7 +29,6 @@ const findPlaceByInvitationCode = async (invitationCode: string) => {
             invitation_code : true
         }
     })
-
     return data;
 }
 
@@ -70,7 +69,7 @@ const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
 }
 
     const placeDao = {
-    findPlaceByInvitationCode,
+    findPlaceIdByInvitationCode,
     createPlace,
     getPlace
 }
