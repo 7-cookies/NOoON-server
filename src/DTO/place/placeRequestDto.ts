@@ -8,3 +8,7 @@ export interface PlaceCreateRequestDto {
     background: number;
     invitationCode: string;
 }
+
+export interface PlaceGetRequestDto {
+    invitationCode: string;
+}
