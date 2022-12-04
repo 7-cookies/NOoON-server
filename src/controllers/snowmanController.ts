@@ -1,3 +1,4 @@
+import { FindSnowmanRequestDto } from './../dto/snowman/snowmanRequestDto';
 import { fail, success } from './../constants/response';
 import { validationResult } from 'express-validator';
 import { Request, Response } from "express"
@@ -23,7 +24,7 @@ const createSnowman = async (req:Request, res:Response) => {
         const createSnowmanResponseDto = await snowmanService.createSnowman(createSnowmanRequestDto, invitationCode);
 
         if(!createSnowmanResponseDto) {
-            return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, m.BAD_REQUEST));
+            return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, m.CREATE_SNOWMAN_FAIL));
         }
 
         return res.status(sc.CREATED).send(success(sc.CREATED, m.CREATE_SNOWMAN_SUCCESS, createSnowmanResponseDto));
@@ -44,9 +45,9 @@ const createSnowman = async (req:Request, res:Response) => {
 const findSnowman = async (req:Request, res:Response) => {
     const {invitationCode, snowmanId } = req.params
 
-    const findSnowmanRequestDto = {
+    const findSnowmanRequestDto:FindSnowmanRequestDto = {
         invitationCode: invitationCode,
-        snowmanId: snowmanId
+        snowmanId: Number(snowmanId)
     }
 
     try {

@@ -1,17 +1,24 @@
+import { FindSnowmanRequestDto } from './../dto/snowman/snowmanRequestDto';
+import { FindSnowmanResponseDto } from './../dto/snowman/snowmanResponseDto';
 import { sc } from "../constants";
 import { placeDao, snowmanDao } from "../dao";
 import { CreateSnowmanRequestDto } from "../dto/snowman/snowmanRequestDto";
 import { CreateSnowmanResponseDto } from "../dto/snowman/snowmanResponseDto";
 
-const createSnowman = async (requestDto:any, invitationCode: string) => {
-    try {
-        const placeId:number = await placeDao.findPlaceIdByInvitationCode(invitationCode) as number;
 
-        const responseDto:any = await snowmanDao.createSnowman(requestDto, placeId);
+const createSnowman = async (requestDto:CreateSnowmanRequestDto, invitationCode: string) => {
+    try {
+        const placeId = await placeDao.findPlaceIdByInvitationCode(invitationCode);
+
+        if (placeId == null) {
+            return null
+        }
+
+        const responseDto:CreateSnowmanResponseDto = await snowmanDao.createSnowman(requestDto, Number(placeId));
         console.log(responseDto);
 
         if (responseDto == null) {
-            return sc.BAD_REQUEST
+            return null
         }
 
         return responseDto;
@@ -22,15 +29,28 @@ const createSnowman = async (requestDto:any, invitationCode: string) => {
     }
 }
 
-const findSnowman = async (requestDto:any) => {
+const findSnowman = async (requestDto:FindSnowmanRequestDto) => {
     try {
-        const responseDto = await snowmanDao.findSnowmanById(requestDto);
+        const data = await snowmanDao.findSnowmanById(requestDto);
 
-        if (responseDto == null) {
-            return sc.BAD_REQUEST
+        if (data == null) {
+            return null
         }
 
-        console.log(responseDto)
+    const responseDto:FindSnowmanResponseDto = {
+        id: data?.id,
+        head: data?.head,
+        accessory: data?.accessory,
+        eye: data?.eye,
+        nose: data?.nose,
+        mouth: data?.mouth,
+        arm: data?.arm,
+        letter: data?.letter as string,
+        creator: data?.creator,
+        createdDate: data?.created_date as Date
+    } 
+
+     console.log(responseDto)
         return responseDto;
 
     } catch (error) {
@@ -38,6 +58,7 @@ const findSnowman = async (requestDto:any) => {
         throw error;
     }
 }
+
 
 const snowmanService = {
     createSnowman,

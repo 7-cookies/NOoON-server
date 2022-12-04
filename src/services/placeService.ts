@@ -10,7 +10,7 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
         //초대코드 생성
         let invitationCode = Math.random().toString(36).substring(2,8);
         //호출해서 비교
-        while(await placeDao.findPlaceByInvitationCode(invitationCode) != null){
+        while(await placeDao.findPlaceIdByInvitationCode(invitationCode) != null){
             invitationCode = Math.random().toString(36).substring(2,8);
         }
         

@@ -10,5 +10,6 @@ export interface CreateSnowmanRequestDto {
 }
 
 export interface FindSnowmanRequestDto {
-
+    invitationCode: string;
+    snowmanId: number;
 }
