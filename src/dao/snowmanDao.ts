@@ -46,15 +46,13 @@ const createSnowman = async (createSnowmanRequestDto:any, placeId:number) => {
 const findSnowmanById = async (findSnowmanRequestDto:any) => {
     const snowmanId:number = Number(findSnowmanRequestDto.snowmanId)
 
-    const responseDto = await prisma.snowman.findFirst({
+    const data = await prisma.snowman.findFirst({
         where: {
             id: snowmanId
         }
     })
 
-    console.log(responseDto)
-    
-    return responseDto;
+    return data;
 }
 
 const snowmanDao = {
