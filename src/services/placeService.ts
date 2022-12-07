@@ -2,7 +2,7 @@ import { PrismaClientValidationError } from "@prisma/client/runtime";
 import { sc } from "../constants";
 import { placeDao } from '../dao';
 import { PlaceRequestDto, PlaceCreateRequestDto, PlaceGetRequestDto } from "../dto/place/placeRequestDto";
-import { PlaceGetResponseDto, PlaceResponseDto } from "../dto/place/placeResponseDto";
+import { PlaceGetResponseDto, PlaceResponseDto, PlaceGetResponseFinalDto } from "../dto/place/placeResponseDto";
 
 const createPlace = async(placeRequestDto: PlaceRequestDto) => {
     try {
@@ -41,7 +41,14 @@ const getPlace = async(placeGetRequestDto : PlaceGetRequestDto) => {
             return null
         }
 
-        return data;
+        const placeGetResponseDto: PlaceGetResponseFinalDto = {
+            name: data.name,
+            invitation_code: data.invitation_code,
+            snowmans: data.snowman_placeTosnowman_place_id,
+            count: data._count.snowman_placeTosnowman_place_id
+        }
+
+        return placeGetResponseDto;
     }
     catch(error) {
         console.log(error);
