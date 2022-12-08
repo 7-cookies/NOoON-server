@@ -49,7 +49,7 @@ const getPlace = async(placeGetRequestDto : PlaceGetRequestDto) => {
 
         const placeGetResponseDto: PlaceGetResponseFinalDto = {
             name: data.name,
-            invitation_code: data.invitation_code,
+            invitationCode: data.invitation_code,
             snowmans: data.snowman_placeTosnowman_place_id,
             count: data._count.snowman_placeTosnowman_place_id
         }

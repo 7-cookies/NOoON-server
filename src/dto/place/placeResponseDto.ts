@@ -28,7 +28,7 @@ export interface PlaceGetResponseDto {
 }
 export interface PlaceGetResponseFinalDto{
     name: string;
-    invitation_code: string;
+    invitationCode: string;
     snowmans: {
         id?: number;
         head?: number;
