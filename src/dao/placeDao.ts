@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { PlaceCreateRequestDto, PlaceGetRequestDto } from '../dto/place/placeRequestDto';
-import { PlaceResponseDto } from '../dto/place/placeResponseDto';
+import { PlaceGetResponseDto, PlaceResponseDto } from '../dto/place/placeResponseDto';
 
 const prisma = new PrismaClient();
 

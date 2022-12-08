@@ -2,7 +2,7 @@ import { PrismaClientValidationError } from "@prisma/client/runtime";
 import { sc } from "../constants";
 import { placeDao } from '../dao';
 import { PlaceRequestDto, PlaceCreateRequestDto, PlaceGetRequestDto } from "../dto/place/placeRequestDto";
-import { PlaceGetResponseDto, PlaceResponseDto, PlaceGetResponseFinalDto } from "../dto/place/placeResponseDto";
+import { PlaceGetResponseDto, PlaceResponseFinalDto, PlaceGetResponseFinalDto } from "../dto/place/placeResponseDto";
 
 const createPlace = async(placeRequestDto: PlaceRequestDto) => {
     try {
@@ -20,12 +20,18 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
             invitationCode: invitationCode
         }
         
-        const placeCreateResponseDto:PlaceResponseDto = await placeDao.createPlace(placeCreateRequestDto);
+        const data = await placeDao.createPlace(placeCreateRequestDto);
+        console.log(data);
+        const responseDto:PlaceResponseFinalDto = {
+            name,
+            background,
+            invitationCode: data.invitation_code
+        }
         //다시 검증
-        if (!placeCreateResponseDto){
+        if (!responseDto){
             return sc.BAD_REQUEST
         }
-        else return placeCreateResponseDto;
+        else return responseDto;
     }
     catch (error) {
         console.log(error);
