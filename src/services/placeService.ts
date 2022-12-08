@@ -2,7 +2,7 @@ import { PrismaClientValidationError } from "@prisma/client/runtime";
 import { sc } from "../constants";
 import { placeDao } from '../dao';
 import { PlaceRequestDto, PlaceCreateRequestDto, PlaceGetRequestDto } from "../dto/place/placeRequestDto";
-import { PlaceResponseDto } from "../dto/place/placeResponseDto";
+import { PlaceGetResponseDto, PlaceResponseFinalDto, PlaceGetResponseFinalDto } from "../dto/place/placeResponseDto";
 
 const createPlace = async(placeRequestDto: PlaceRequestDto) => {
     try {
@@ -20,12 +20,19 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
             invitationCode: invitationCode
         }
         
-        const placeCreateResponseDto:PlaceResponseDto = await placeDao.createPlace(placeCreateRequestDto);
-        //다시 검증
-        if (!placeCreateResponseDto == null){
+        const data = await placeDao.createPlace(placeCreateRequestDto);
+        
+        if (data == null){
             return null;
         }
-        else return placeCreateResponseDto;
+        else {
+            const responseDto:PlaceResponseFinalDto = {
+                name,
+                background,
+                invitationCode: data.invitation_code
+            }
+            return responseDto;
+        }
     }
     catch (error) {
         console.log(error);
@@ -35,12 +42,20 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
 
 const getPlace = async(placeGetRequestDto : PlaceGetRequestDto) => {
     try{
-        const placeGetResponseDto = await placeDao.getPlace(placeGetRequestDto);
+        const data: (PlaceGetResponseDto|null) = await placeDao.getPlace(placeGetRequestDto);
 
-        if (placeGetResponseDto == null){
-            return null;
+        if (data==null){
+            return null
         }
-        else return placeGetResponseDto;
+
+        const placeGetResponseDto: PlaceGetResponseFinalDto = {
+            name: data.name,
+            invitationCode: data.invitation_code,
+            snowmans: data.snowman_placeTosnowman_place_id,
+            count: data._count.snowman_placeTosnowman_place_id
+        }
+
+        return placeGetResponseDto;
     }
     catch(error) {
         console.log(error);

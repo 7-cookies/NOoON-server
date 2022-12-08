@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import { m, sc } from "../constants";
 import { fail, success } from "../constants/response";
 import { PlaceRequestDto } from "../dto/place/placeRequestDto";
+import { PlaceGetResponseFinalDto } from "../dto/place/placeResponseDto";
 import { placeService } from "../services";
 
 const createPlace= async (req:Request, res:Response) => {
@@ -13,7 +14,8 @@ const createPlace= async (req:Request, res:Response) => {
     
     const placeRequestDto: PlaceRequestDto = req.body;
     try {
-        const placeResponseDto = await placeService.createPlace(placeRequestDto);
+        
+        const placeResponseDto: PlaceGetResponseFinalDto = await placeService.createPlace(placeRequestDto);
         
         if(!placeResponseDto) { 
             return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST,m.CREATE_PLACE_FAIL));
@@ -36,12 +38,12 @@ const getPlace = async (req:Request, res: Response) => {
         const placeGetRequestDto = {
             invitationCode: invitationCode
         }
-        
         const placeResponseDto = await placeService.getPlace(placeGetRequestDto);
-        
+
         if (!placeResponseDto) {
             return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST,m.GET_PLACE_FAIL));
         }
+
         return res.status(sc.OK).send(success(sc.OK, m.GET_PLACE_SUCCESS, placeResponseDto));
 
     } catch (error){
