@@ -14,7 +14,9 @@ app.use(
         origin: [
             "118.223.59.127",
             "118.223.59.127:3000",
-            "https://noonsaram-server.shop"
+            "https://noonsaram-server.shop",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000"
         ],
     })
 );
