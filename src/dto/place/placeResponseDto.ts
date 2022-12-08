@@ -1,6 +1,11 @@
 export interface PlaceResponseDto {
     name: string;
     background: number;
+    invitation_code?: string;
+}
+export interface PlaceResponseFinalDto {
+    name: string;
+    background: number;
     invitationCode?: string;
 }
 
