@@ -10,10 +10,11 @@ import jwtHandler from '../modules/jwtHandler';
 const signIn = async (userRequestDto:UserSignUpRequestDto) => {
     try {
         const user = await userDao.findUserByUsername(userRequestDto);
+
         if (!user) return null;
         
         const password:string = String(userRequestDto.password);
-        
+
         // * 비밀번호 비교
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return sc.UNAUTHORIZED;

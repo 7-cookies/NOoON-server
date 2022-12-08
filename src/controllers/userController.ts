@@ -44,8 +44,6 @@ const signIn = async (req: Request, res: Response) => {
     }
   
     const userSignInDto: UserSignInRequestDto = req.body;
-
-    console.log(userSignInDto);
   
     try {
       const userId = await userService.signIn(userSignInDto);

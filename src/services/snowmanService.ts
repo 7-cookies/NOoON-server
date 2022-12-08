@@ -8,7 +8,8 @@ import { CreateSnowmanResponseDto } from "../dto/snowman/snowmanResponseDto";
 
 const createSnowman = async (requestDto:CreateSnowmanRequestDto, invitationCode: string) => {
     try {
-        const placeId = await placeDao.findPlaceIdByInvitationCode(invitationCode);
+        const place = await placeDao.findPlaceIdByInvitationCode(invitationCode);
+        const placeId = place?.id;
 
         if (placeId == null) {
             return null

@@ -1,18 +1,32 @@
+import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import router from "./routes";
 
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000 ;
 
 app.use(express.json());
+app.use(
+    cors({
+        credentials: true,
+        origin: [
+            "118.223.59.127",
+            "118.223.59.127:3000",
+            "https://noonsaram-server.shop"
+        ],
+    })
+);
+
+// route
 app.use("/api/v1", router); 
 
 app.get("/", (req:Request, res:Response, next:NextFunction) => {
 })
 
-app.listen(port, () => {
+const server = app
+    .listen(port, () => {
     console.log(
         `
         |-------------------|
@@ -21,6 +35,12 @@ app.listen(port, () => {
         |-------------------|
         `
     )
-}); 
+})
+.on('error', (err) => {
+    console.log(err);
+    process.exit(1);
+});
+
+server.timeout = 1000000;
 
 module.exports = app;
