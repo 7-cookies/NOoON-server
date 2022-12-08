@@ -1,4 +1,4 @@
 export default {
-    TOKEN_EXPIRED: -3,
-    TOKEN_INVALID: -4,
+    TOKEN_EXPIRED: -4,
+    TOKEN_INVALID: -3,
   };

@@ -26,6 +26,7 @@ const findPlaceIdByInvitationCode = async (invitationCode: string) => {
             invitation_code : invitationCode
         },
         select: {
+            id: true,
             invitation_code : true
         }
     })

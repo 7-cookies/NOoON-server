@@ -22,8 +22,8 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
         
         const placeCreateResponseDto:PlaceResponseDto = await placeDao.createPlace(placeCreateRequestDto);
         //다시 검증
-        if (!placeCreateResponseDto){
-            return sc.BAD_REQUEST
+        if (!placeCreateResponseDto == null){
+            return null;
         }
         else return placeCreateResponseDto;
     }
@@ -37,8 +37,8 @@ const getPlace = async(placeGetRequestDto : PlaceGetRequestDto) => {
     try{
         const placeGetResponseDto = await placeDao.getPlace(placeGetRequestDto);
 
-        if (!placeGetResponseDto){
-            return sc.BAD_REQUEST
+        if (placeGetResponseDto == null){
+            return null;
         }
         else return placeGetResponseDto;
     }
