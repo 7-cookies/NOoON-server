@@ -21,17 +21,18 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
         }
         
         const data = await placeDao.createPlace(placeCreateRequestDto);
-        console.log(data);
-        const responseDto:PlaceResponseFinalDto = {
-            name,
-            background,
-            invitationCode: data.invitation_code
+        
+        if (data == null){
+            return null;
         }
-        //다시 검증
-        if (!responseDto){
-            return sc.BAD_REQUEST
+        else {
+            const responseDto:PlaceResponseFinalDto = {
+                name,
+                background,
+                invitationCode: data.invitation_code
+            }
+            return responseDto;
         }
-        else return responseDto;
     }
     catch (error) {
         console.log(error);
