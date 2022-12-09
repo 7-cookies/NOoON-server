@@ -12,8 +12,11 @@ import { UserSignInResponseDto, UserSignUpResponseDto } from "../dto/user/userRe
 // * request data: username, password
 const signUp = async (req: Request, res: Response) => {
     const error = validationResult(req);
+    
+    // const errorMessage = error.mapped()
+
     if (!error.isEmpty()) {
-        return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, m.BAD_REQUEST));
+      return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, error.array()[0].msg));
     }
 
     const userRequestDto:UserSignUpRequestDto = req.body;
