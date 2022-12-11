@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { UserSignInResponseDto, UserSignUpResponseDto } from '../dto/user/userReponseDto';
-import { UserSignInRequestDto } from '../dto/user/userRequestDto';
+import { UserSignInRequestDto,UserUpdateRequestDto } from '../dto/user/userRequestDto';
 
 const prisma = new PrismaClient();
 
@@ -55,11 +55,33 @@ const findUserByUsername = async (requestDto: UserSignInRequestDto) => {
     return user;
 }
 
+
+const updateUserPlaceId = async (requestDto: UserUpdateRequestDto) => {
+    const user = await prisma.user.update({
+        where: {
+            id: requestDto.userId
+        },
+        data: {
+            place: {
+                connect: {
+                    id: requestDto.placeId
+                },
+            },
+        },
+    });
+
+    return user;
+}
+
+
+
+
 const userDao = {
     findPasswordByUsername,
     findUserIdByUsername,
     createUser,
-    findUserByUsername
+    findUserByUsername,
+    updateUserPlaceId,
 }
 
 export default userDao;
