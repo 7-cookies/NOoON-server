@@ -29,8 +29,13 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
             placeId: data.id
         }
         
-        const updateUser = await userDao.updateUserPlaceId(userUpdateRequestDto);
-        
+        const user = await userDao.findUserByUserId(userId);
+        if(user?.place_id == null) {
+            const updateUser = await userDao.updateUserPlaceId(userUpdateRequestDto);
+        }
+        else{
+            return null
+        }        
 
         if (data == null){
             return null;
