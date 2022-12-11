@@ -74,6 +74,14 @@ const updateUserPlaceId = async (requestDto: UserUpdateRequestDto) => {
 }
 
 
+const findUserByUserId = async(userId: number) => {
+    const user = await prisma.user.findFirst({
+        where: {
+            id: userId
+        },
+    });
+    return user;
+}
 
 
 const userDao = {
@@ -82,6 +90,7 @@ const userDao = {
     createUser,
     findUserByUsername,
     updateUserPlaceId,
+    findUserByUserId
 }
 
 export default userDao;
