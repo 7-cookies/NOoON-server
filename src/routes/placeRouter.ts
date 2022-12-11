@@ -16,4 +16,7 @@ placeController.createPlace);
 router.get('/:invitationCode/',
 placeController.getPlace);
 
+router.get('/:invitationCode/user',
+    placeController.getUserPlace);
+
 export default router;

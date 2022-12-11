@@ -57,15 +57,16 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
 
 const getPlace = async(placeGetRequestDto : PlaceGetRequestDto) => {
     try{
-        const data: (PlaceGetResponseDto|null) = await placeDao.getPlace(placeGetRequestDto);
+        const data = await placeDao.getPlace(placeGetRequestDto);
 
         if (data==null){
             return null
         }
 
-        const placeGetResponseDto: PlaceGetResponseFinalDto = {
+        const placeGetResponseDto = {
             name: data.name,
             invitationCode: data.invitation_code,
+            background: data.background,
             snowmans: data.snowman_placeTosnowman_place_id,
             count: data._count.snowman_placeTosnowman_place_id
         }
