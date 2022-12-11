@@ -11,3 +11,8 @@ export interface UserSignInRequestDto {
     username: string;
     password: string;
 }
+
+export interface UserUpdateRequestDto {
+    userId?: number;
+    placeId?: number;
+}

@@ -1,6 +1,7 @@
 export interface PlaceRequestDto {
     name: string;
     background: number;
+    userId: number;
 }
 
 export interface PlaceCreateRequestDto {

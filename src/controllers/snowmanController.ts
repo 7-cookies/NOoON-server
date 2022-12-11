@@ -16,10 +16,11 @@ const createSnowman = async (req:Request, res:Response) => {
     }
 
     try {
+        
         const createSnowmanRequestDto = req.body;
-        const { invitationCode } = req.params
-
-        console.log(invitationCode);
+        const { invitationCode } = req.params;
+        console.log(req.params);
+        console.log("invitationCode: "+invitationCode);
 
         const createSnowmanResponseDto = await snowmanService.createSnowman(createSnowmanRequestDto, invitationCode);
 

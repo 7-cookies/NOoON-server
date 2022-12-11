@@ -1,12 +1,14 @@
 import { PrismaClientValidationError } from "@prisma/client/runtime";
 import { sc } from "../constants";
-import { placeDao } from '../dao';
+import { placeDao, userDao } from '../dao';
 import { PlaceRequestDto, PlaceCreateRequestDto, PlaceGetRequestDto } from "../dto/place/placeRequestDto";
+import { UserUpdateRequestDto } from "../dto/user/userRequestDto";
 import { PlaceGetResponseDto, PlaceResponseFinalDto, PlaceGetResponseFinalDto } from "../dto/place/placeResponseDto";
 
 const createPlace = async(placeRequestDto: PlaceRequestDto) => {
     try {
-        const { name, background } = placeRequestDto;
+        const { name, background, userId } = placeRequestDto;
+
         //초대코드 생성
         let invitationCode = Math.random().toString(36).substring(2,8);
         //호출해서 비교
@@ -15,13 +17,26 @@ const createPlace = async(placeRequestDto: PlaceRequestDto) => {
         }
         
         const placeCreateRequestDto: PlaceCreateRequestDto = {
-            name: name,
-            background: background,
+            name,
+            background,
             invitationCode: invitationCode
         }
         
         const data = await placeDao.createPlace(placeCreateRequestDto);
         
+        const userUpdateRequestDto: UserUpdateRequestDto = {
+            userId: userId,
+            placeId: data.id
+        }
+        
+        const user = await userDao.findUserByUserId(userId);
+        if(user?.place_id == null) {
+            const updateUser = await userDao.updateUserPlaceId(userUpdateRequestDto);
+        }
+        else{
+            return null
+        }        
+
         if (data == null){
             return null;
         }
