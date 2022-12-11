@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import { m, sc } from "../constants";
 import { fail, success } from "../constants/response";
 import { PlaceRequestDto } from "../dto/place/placeRequestDto";
-import { PlaceGetResponseFinalDto } from "../dto/place/placeResponseDto";
+// import { PlaceGetResponseFinalDto } from "../dto/place/placeResponseDto";
 import { placeService } from "../services";
 
 const createPlace= async (req:Request, res:Response) => {
