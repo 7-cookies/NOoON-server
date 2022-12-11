@@ -14,4 +14,5 @@ export interface UserSignInResponseDto {
     username?: string;
     password?: string;
     accessToken?: string;
+    hasPlace?: string;
 }

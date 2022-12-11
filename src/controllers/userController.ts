@@ -6,6 +6,7 @@ import { validationResult } from 'express-validator';
 import { fail, success } from "../constants/response";
 import jwtHandler from "../modules/jwtHandler";
 import { UserSignInResponseDto, UserSignUpResponseDto } from "../dto/user/userReponseDto";
+import { user } from "@prisma/client";
 
 
 // * 회원가입
@@ -49,8 +50,8 @@ const signIn = async (req: Request, res: Response) => {
     const userSignInDto: UserSignInRequestDto = req.body;
   
     try {
-      const userId = await userService.signIn(userSignInDto);
-  
+      const { userId, hasPlace } = await userService.signIn(userSignInDto);
+
       if (!userId) { return res.status(sc.NOT_FOUND).send(fail(sc.NOT_FOUND, m.NOT_FOUND)); }
       else if (userId === sc.UNAUTHORIZED)
         { return res.status(sc.UNAUTHORIZED).send(fail(sc.UNAUTHORIZED, m.INVALID_PASSWORD)); }
@@ -62,6 +63,7 @@ const signIn = async (req: Request, res: Response) => {
       const userSignInResponseDto: UserSignInResponseDto = {
         id: userId,
         accessToken: accessToken,
+        hasPlace: hasPlace
       };
   
       res.status(sc.OK).send(success(sc.OK, m.SIGN_IN_SUCCESS, userSignInResponseDto));

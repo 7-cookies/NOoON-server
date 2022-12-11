@@ -1,7 +1,7 @@
 import bcrypt, { hash } from 'bcrypt';
 import config from '../config';
 import { m, sc} from '../constants';
-import { userDao } from '../dao';
+import { placeDao, userDao } from '../dao';
 import { UserSignInResponseDto, UserSignUpResponseDto } from '../dto/user/userReponseDto';
 import { UserSignUpRequestDto, UserSignInRequestDto } from '../dto/user/userRequestDto';
 import jwtHandler from '../modules/jwtHandler';
@@ -18,9 +18,21 @@ const signIn = async (userRequestDto:UserSignUpRequestDto) => {
         // * 비밀번호 비교
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return sc.UNAUTHORIZED;
-
-        return user.id;
-
+        
+        if(user?.place_id == null) {
+            return {
+                userId: user.id,
+                hasPlace: null
+            }
+        }
+        else{
+            const placeData = await placeDao.findPlaceInvitationCodeById(user.place_id)
+            return {
+                userId: user.id,
+                hasPlace: placeData?.invitation_code
+            }
+        }
+        
     } catch (error) {
         console.log(error);
         throw error;
