@@ -5,16 +5,11 @@ import { PlaceGetResponseDto, PlaceResponseDto } from '../dto/place/placeRespons
 const prisma = new PrismaClient();
 
 const createPlace = async (requestDto: PlaceCreateRequestDto) => {
-    const responseDto:PlaceResponseDto = await prisma.place.create({
+    const responseDto = await prisma.place.create({
         data: {
             name: requestDto.name,
             background: requestDto.background,
             invitation_code: requestDto.invitationCode
-        },
-        select: {
-            name: true,
-            background: true,
-            invitation_code: true,
         }
     })
     return responseDto;
@@ -69,7 +64,7 @@ const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
     return data;
 }
 
-    const placeDao = {
+const placeDao = {
     findPlaceIdByInvitationCode,
     createPlace,
     getPlace
