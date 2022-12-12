@@ -18,18 +18,30 @@ const signIn = async (userRequestDto:UserSignUpRequestDto) => {
         // * 비밀번호 비교
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return sc.UNAUTHORIZED;
-        
-        if(user?.place_id == null) {
-            return {
-                userId: user.id,
-                hasPlace: null
+
+        const userId: number = user.id as number;
+
+        const placeId = user.place_id
+        if(placeId == null) {
+            const responseData = {
+                userId:userId,
+                hasPlace: "NO_PLACE"
             }
+            return responseData
         }
         else{
-            const placeData = await placeDao.findPlaceInvitationCodeById(user.place_id)
+            const placeData = await placeDao.findPlaceInvitationCodeById(+placeId)
+            if (!placeData) {
+                return {
+                    userId: userId,
+                    hasPlace: "NO_PLACE"
+                }
+            }
+
+            const hasPlace: string = placeData.invitation_code as string
             return {
-                userId: user.id,
-                hasPlace: placeData?.invitation_code
+                userId: userId,
+                hasPlace: hasPlace
             }
         }
         
