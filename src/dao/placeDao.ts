@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { m } from '../constants';
 import { PlaceCreateRequestDto, PlaceGetRequestDto } from '../dto/place/placeRequestDto';
 import { PlaceGetResponseDto, PlaceResponseDto } from '../dto/place/placeResponseDto';
 
@@ -49,6 +50,7 @@ const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
             invitation_code: invitationCode,
         },
         select: {
+            id:true,
             name: true,
             invitation_code: true,
             background:true,

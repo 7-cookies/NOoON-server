@@ -24,6 +24,9 @@ const createSnowman = async (req:Request, res:Response) => {
 
         const createSnowmanResponseDto = await snowmanService.createSnowman(createSnowmanRequestDto, invitationCode);
 
+        if (createSnowmanResponseDto == sc.BAD_REQUEST) {
+            return res.status(sc.BAD_REQUEST).send(fail(sc.OK, m.CREATE_SNOWMAN_LIMIT))
+        }
         if(!createSnowmanResponseDto) {
             return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, m.CREATE_SNOWMAN_FAIL));
         }
