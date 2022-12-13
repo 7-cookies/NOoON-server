@@ -44,10 +44,10 @@ const createSnowman = async (req:Request, res:Response) => {
 
 // * 눈사람 조회
 const findSnowman = async (req:Request, res:Response) => {
-    const {invitationCode, snowmanId } = req.params
+    const { invitationCode, snowmanId } = req.params;
 
-    const findSnowmanRequestDto:FindSnowmanRequestDto = {
-        invitationCode: invitationCode,
+    const findSnowmanRequestDto: FindSnowmanRequestDto = {
+        invitationCode,
         snowmanId: Number(snowmanId)
     }
 

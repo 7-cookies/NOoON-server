@@ -50,7 +50,10 @@ const signIn = async (req: Request, res: Response) => {
     const userSignInDto: UserSignInRequestDto = req.body;
   
     try {
-      const { userId, hasPlace } = await userService.signIn(userSignInDto);
+        const data = await userService.signIn(userSignInDto) as any;
+
+        const userId:any = data.userId;
+        const hasPlace:any = data.hasPlace;
 
       if (!userId) { return res.status(sc.NOT_FOUND).send(fail(sc.NOT_FOUND, m.NOT_FOUND)); }
       else if (userId === sc.UNAUTHORIZED)
@@ -60,7 +63,7 @@ const signIn = async (req: Request, res: Response) => {
       const accessToken = jwtHandler.sign(userId);
       
       // * Response DTO
-      const userSignInResponseDto: UserSignInResponseDto = {
+      const userSignInResponseDto= {
         id: userId,
         accessToken: accessToken,
         hasPlace: hasPlace
