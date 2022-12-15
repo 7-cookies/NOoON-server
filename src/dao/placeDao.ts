@@ -1,20 +1,16 @@
 import { PrismaClient } from '@prisma/client';
+import { m } from '../constants';
 import { PlaceCreateRequestDto, PlaceGetRequestDto } from '../dto/place/placeRequestDto';
-import { PlaceResponseDto } from '../dto/place/placeResponseDto';
+import { PlaceGetResponseDto, PlaceResponseDto } from '../dto/place/placeResponseDto';
 
 const prisma = new PrismaClient();
 
 const createPlace = async (requestDto: PlaceCreateRequestDto) => {
-    const responseDto:PlaceResponseDto = await prisma.place.create({
+    const responseDto = await prisma.place.create({
         data: {
             name: requestDto.name,
             background: requestDto.background,
             invitation_code: requestDto.invitationCode
-        },
-        select: {
-            name: true,
-            background: true,
-            invitation_code: true,
         }
     })
     return responseDto;
@@ -26,6 +22,20 @@ const findPlaceIdByInvitationCode = async (invitationCode: string) => {
             invitation_code : invitationCode
         },
         select: {
+            id: true,
+            invitation_code : true
+        }
+    })
+    return data;
+}
+
+const findPlaceInvitationCodeById = async (placeId: number) => {
+    const data = await prisma.place.findFirst({
+        where: {
+            id : placeId
+        },
+        select: {
+            id: true,
             invitation_code : true
         }
     })
@@ -40,8 +50,10 @@ const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
             invitation_code: invitationCode,
         },
         select: {
+            id:true,
             name: true,
             invitation_code: true,
+            background:true,
             snowman_placeTosnowman_place_id: {
                 orderBy:{
                     created_date: 'asc'
@@ -68,9 +80,10 @@ const getPlace = async (placeGetRequestDto: PlaceGetRequestDto) => {
     return data;
 }
 
-    const placeDao = {
+const placeDao = {
     findPlaceIdByInvitationCode,
     createPlace,
-    getPlace
+    getPlace,
+    findPlaceInvitationCodeById
 }
 export default placeDao;

@@ -21,7 +21,9 @@ const message = {
     SIGN_IN_FAIL: "로그아웃 실패",
     SIGN_UP_SUCCESS: "회원가입 성공",
     SIGN_UP_FAIL: "회원가입 실패",
+    SIGN_UP_LIMIT: "username은 공백없이 영문, 숫자, 특수문자 1~20자입니다.",
     USER_EXIST: "존재하는 회원입니다.",
+    
 
     // 동산
     CREATE_PLACE_SUCCESS: "동산 생성 성공",
@@ -35,7 +37,7 @@ const message = {
     GET_SNOWMAN_SUCCESS: "눈사람 조회 성공",
     GET_SNOWMAN_FAIL: "눈사람 조회 실패",
     GET_SNOWMAN_TIME_LIMIT: "눈사람 조회가 아직 불가능",
-
+    CREATE_SNOWMAN_LIMIT: "눈사람 생성 더이상 불가능"
 }
 
 export default message;

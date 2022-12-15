@@ -16,13 +16,17 @@ const createSnowman = async (req:Request, res:Response) => {
     }
 
     try {
+        
         const createSnowmanRequestDto = req.body;
-        const { invitationCode } = req.params
-
-        console.log(invitationCode);
+        const { invitationCode } = req.params;
+        console.log(req.params);
+        console.log("invitationCode: "+invitationCode);
 
         const createSnowmanResponseDto = await snowmanService.createSnowman(createSnowmanRequestDto, invitationCode);
 
+        if (createSnowmanResponseDto == sc.BAD_REQUEST) {
+            return res.status(sc.BAD_REQUEST).send(fail(sc.OK, m.CREATE_SNOWMAN_LIMIT))
+        }
         if(!createSnowmanResponseDto) {
             return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, m.CREATE_SNOWMAN_FAIL));
         }
@@ -43,10 +47,10 @@ const createSnowman = async (req:Request, res:Response) => {
 
 // * 눈사람 조회
 const findSnowman = async (req:Request, res:Response) => {
-    const {invitationCode, snowmanId } = req.params
+    const { invitationCode, snowmanId } = req.params;
 
-    const findSnowmanRequestDto:FindSnowmanRequestDto = {
-        invitationCode: invitationCode,
+    const findSnowmanRequestDto: FindSnowmanRequestDto = {
+        invitationCode,
         snowmanId: Number(snowmanId)
     }
 

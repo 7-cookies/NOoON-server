@@ -1,18 +1,27 @@
+import { PlaceGetRequestDto } from './../dto/place/placeRequestDto';
 import { FindSnowmanRequestDto } from './../dto/snowman/snowmanRequestDto';
 import { FindSnowmanResponseDto } from './../dto/snowman/snowmanResponseDto';
 import { sc } from "../constants";
 import { placeDao, snowmanDao } from "../dao";
 import { CreateSnowmanRequestDto } from "../dto/snowman/snowmanRequestDto";
 import { CreateSnowmanResponseDto } from "../dto/snowman/snowmanResponseDto";
+import snowmanCreateLimit from '../constants/snowmanCreateLimit';
 
 
 const createSnowman = async (requestDto:CreateSnowmanRequestDto, invitationCode: string) => {
     try {
-        const placeId = await placeDao.findPlaceIdByInvitationCode(invitationCode);
+        const place = await placeDao.getPlace({invitationCode});
+        const placeId = place?.id;
 
         if (placeId == null) {
             return null
         }
+        
+        const snowmanCount = place?._count.snowman_placeTosnowman_place_id as number;
+
+        if (snowmanCount > snowmanCreateLimit.SNOWMAN_CREATE_LIMIT) {
+            return sc.BAD_REQUEST;            
+        } 
 
         const responseDto:CreateSnowmanResponseDto = await snowmanDao.createSnowman(requestDto, Number(placeId));
         console.log(responseDto);

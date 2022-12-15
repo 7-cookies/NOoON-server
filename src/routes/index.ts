@@ -7,7 +7,7 @@ import snowmanRouter from "./snowmanRouter";
 const router: Router = Router();
 
 router.use("/user", userRouter);
+router.use("/place", snowmanRouter);
 router.use("/place", placeRouter);
-router.use("/place/:invitationCode/snowman", snowmanRouter);
 
 export default router;

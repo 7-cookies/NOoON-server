@@ -6,14 +6,18 @@ import { validationResult } from 'express-validator';
 import { fail, success } from "../constants/response";
 import jwtHandler from "../modules/jwtHandler";
 import { UserSignInResponseDto, UserSignUpResponseDto } from "../dto/user/userReponseDto";
+import { user } from "@prisma/client";
 
 
 // * 회원가입
 // * request data: username, password
 const signUp = async (req: Request, res: Response) => {
     const error = validationResult(req);
+    
+    // const errorMessage = error.mapped()
+
     if (!error.isEmpty()) {
-        return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, m.BAD_REQUEST));
+      return res.status(sc.BAD_REQUEST).send(fail(sc.BAD_REQUEST, error.array()[0].msg));
     }
 
     const userRequestDto:UserSignUpRequestDto = req.body;
@@ -44,12 +48,13 @@ const signIn = async (req: Request, res: Response) => {
     }
   
     const userSignInDto: UserSignInRequestDto = req.body;
-
-    console.log(userSignInDto);
   
     try {
-      const userId = await userService.signIn(userSignInDto);
-  
+        const data = await userService.signIn(userSignInDto) as any;
+
+        const userId:any = data.userId;
+        const hasPlace:any = data.hasPlace;
+
       if (!userId) { return res.status(sc.NOT_FOUND).send(fail(sc.NOT_FOUND, m.NOT_FOUND)); }
       else if (userId === sc.UNAUTHORIZED)
         { return res.status(sc.UNAUTHORIZED).send(fail(sc.UNAUTHORIZED, m.INVALID_PASSWORD)); }
@@ -58,9 +63,10 @@ const signIn = async (req: Request, res: Response) => {
       const accessToken = jwtHandler.sign(userId);
       
       // * Response DTO
-      const userSignInResponseDto: UserSignInResponseDto = {
+      const userSignInResponseDto= {
         id: userId,
         accessToken: accessToken,
+        hasPlace: hasPlace
       };
   
       res.status(sc.OK).send(success(sc.OK, m.SIGN_IN_SUCCESS, userSignInResponseDto));
