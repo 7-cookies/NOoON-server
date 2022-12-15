@@ -21,7 +21,7 @@ const message = {
     SIGN_IN_FAIL: "로그아웃 실패",
     SIGN_UP_SUCCESS: "회원가입 성공",
     SIGN_UP_FAIL: "회원가입 실패",
-    SIGN_UP_LIMIT: "username은 영문, 숫자, 특수문자 1~20자입니다.",
+    SIGN_UP_LIMIT: "username은 공백없이 영문, 숫자, 특수문자 1~20자입니다.",
     USER_EXIST: "존재하는 회원입니다.",
     
 
