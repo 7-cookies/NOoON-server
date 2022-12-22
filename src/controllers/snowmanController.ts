@@ -19,8 +19,6 @@ const createSnowman = async (req:Request, res:Response) => {
         
         const createSnowmanRequestDto = req.body;
         const { invitationCode } = req.params;
-        console.log(req.params);
-        console.log("invitationCode: "+invitationCode);
 
         const createSnowmanResponseDto = await snowmanService.createSnowman(createSnowmanRequestDto, invitationCode);
 
