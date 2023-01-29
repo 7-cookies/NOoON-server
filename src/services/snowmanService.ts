@@ -24,7 +24,6 @@ const createSnowman = async (requestDto:CreateSnowmanRequestDto, invitationCode:
         } 
 
         const responseDto:CreateSnowmanResponseDto = await snowmanDao.createSnowman(requestDto, Number(placeId));
-        console.log(responseDto);
 
         if (responseDto == null) {
             return null
@@ -59,11 +58,10 @@ const findSnowman = async (requestDto:FindSnowmanRequestDto) => {
         createdDate: data?.created_date as Date
     } 
 
-     console.log(responseDto)
         return responseDto;
 
     } catch (error) {
-        console.log(error)
+        console.log(error);
         throw error;
     }
 }
